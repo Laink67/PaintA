@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PaintA</string>
+    <string name="message_saved">Successful</string>
+    <string name="message_error_saving">Some problem with saving</string>
+</resources>
