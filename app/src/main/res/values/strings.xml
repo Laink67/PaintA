@@ -2,4 +2,9 @@
     <string name="app_name">PaintA</string>
     <string name="message_saved">Successful</string>
     <string name="message_error_saving">Some problem with saving</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="permission_message">Do you agree to get access to your external storage?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>

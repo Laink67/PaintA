@@ -1,5 +1,6 @@
 package ru.laink.painta
 
+import android.Manifest
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.*
@@ -10,6 +11,7 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
+import androidx.core.app.ActivityCompat.requestPermissions
 import kotlin.math.abs
 
 class PainView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
@@ -132,7 +134,8 @@ class PainView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
         }
     }
 
-    private fun save() {
+    public fun save() {
+
         lateinit var message: Toast
 
         val name = "PrintA_" + System.currentTimeMillis() + "_.jpg"
@@ -154,6 +157,5 @@ class PainView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
         message.setGravity(Gravity.CENTER, message.xOffset / 2, message.yOffset / 2)
         message.show()
-
     }
 }
