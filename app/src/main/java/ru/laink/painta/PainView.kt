@@ -134,7 +134,7 @@ class PainView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
         }
     }
 
-    public fun save() {
+    fun save() {
 
         lateinit var message: Toast
 
@@ -157,5 +157,20 @@ class PainView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
         message.setGravity(Gravity.CENTER, message.xOffset / 2, message.yOffset / 2)
         message.show()
+    }
+
+    fun clear() {
+        pathMap.clear() //  Удалить все контуры
+        pathPointsMap.clear() // Удалить все предыдущие точки
+        bitmap.eraseColor(Color.WHITE) // Очитска изображения
+        invalidate()// Перерисовать изображение
+    }
+
+    fun getLineWidth(): Int {
+        return paintLine.strokeWidth.toInt()
+    }
+
+    fun setLineWidth(width: Float) {
+        paintLine.strokeWidth = width
     }
 }

@@ -7,4 +7,8 @@
     <string name="permission_message">Do you agree to get access to your external storage?</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="erase">Erase image?</string>
+    <string name="width_dialog_message">Change line width ?</string>
+    <string name="menuitem_color">Color</string>
+    <string name="menuitem_line_width">Width</string>
 </resources>

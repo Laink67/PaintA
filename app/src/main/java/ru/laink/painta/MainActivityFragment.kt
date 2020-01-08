@@ -2,14 +2,19 @@ package ru.laink.painta
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.pm.PackageManager
+import android.hardware.*
 import android.os.Bundle
 import android.view.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_main.*
+import ru.laink.painta.dialogs.EraseDialogFragment
+import ru.laink.painta.dialogs.WidthDialogFragment
 
 class MainActivityFragment : Fragment() {
 
@@ -17,7 +22,8 @@ class MainActivityFragment : Fragment() {
         const val MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1
     }
 
-    private lateinit var painView: PainView
+    lateinit var accelerationListener: AccelerationListener
+    lateinit var painView: PainView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +35,26 @@ class MainActivityFragment : Fragment() {
         painView = view.findViewById(R.id.paint_view)
         setHasOptionsMenu(true)
 
+        accelerationListener = AccelerationListener(fragmentManager!!)
+        accelerationListener.lastAcceleration = SensorManager.GRAVITY_EARTH
+        accelerationListener.currentAcceleration = accelerationListener.lastAcceleration
+
+        accelerationListener.sensorManager =
+            context!!.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Прослушивание событий акселерометра
+        accelerationListener.register()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Прекращение прослушивания событий акселерометра
+        accelerationListener.unregister()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -42,10 +67,16 @@ class MainActivityFragment : Fragment() {
         when (item.itemId) {
             R.id.item_save ->
                 saveWithPermission()
+            R.id.item_delete -> {
+                val eraseDialogFragment = EraseDialogFragment()
+                eraseDialogFragment.show(fragmentManager!!, "Erase dialog")
+            }
+            R.id.item_line_width -> {
+                val widthDialogFragment = WidthDialogFragment()
+                widthDialogFragment.show(fragmentManager!!, "Width dialog")
+            }
         }
-/*
-            R.id.item_delete ->
-*/
+
 
         return super.onOptionsItemSelected(item)
     }
